@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source /root/.ssh/agent/root || . /root/.ssh/agent/root
+
 echo $(date) > ./log.build
 
 timestamp () {
