@@ -2,7 +2,7 @@
 
 echo $(date) > ./log.build
 
-docker build . -t blairy/kali_patched || echo 'Docker Build Failed!' 
+docker build . -t blairy/kali_patched:latest || echo 'Docker Build Failed!' 
 
 git="/usr/bin/git -C /home/docker/kali_patched_docker"
 
