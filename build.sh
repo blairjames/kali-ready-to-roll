@@ -9,3 +9,4 @@ $git add --all || echo 'Add Failed!'
 $git commit -a -m 'Automatic build '$timestp || echo 'Commit Failed!'
 $git push || echo 'Push Failed!'
 
+echo $(date) > ./log.build
