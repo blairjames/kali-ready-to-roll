@@ -2,7 +2,11 @@
 
 echo $(date) > ./log.build
 
-docker build . -t blairy/kali_patched:latest || echo 'Docker Build Failed!' 
+timestamp () {
+    date +"%Y%m%d_%H%M%S"
+}
+
+docker build . -t blairy/kali_patched:$(timestamp) || echo 'Docker Build Failed!' 
 
 git="/usr/bin/git -C /home/docker/kali_patched_docker"
 
