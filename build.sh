@@ -2,7 +2,7 @@
 
 source /root/.ssh/agent/root || . /root/.ssh/agent/root
 
-echo $(date) > ./log.build
+echo $(date) > /home/docker/kali_patched_docker/log.build
 
 timestamp () {
     date +"%Y%m%d_%H%M%S"
