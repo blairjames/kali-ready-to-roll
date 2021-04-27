@@ -8,7 +8,7 @@ timestamp () {
     date +"%Y%m%d_%H%M%S"
 }
 
-docker build . -t blairy/kali_patched:$(timestamp) || echo 'Docker Build Failed!' 
+docker build . -t blairy/kali_patched:$(timestamp) --no-cache --rm --pull || echo 'Docker Build Failed!' 
 
 git="/usr/bin/git -C /home/docker/kali_patched_docker"
 
@@ -18,6 +18,7 @@ $git commit -a -m 'Automatic build '$timestp || echo 'Commit Failed!'
 $git push || echo 'Push Failed!'
 
 # Prune
-/usr/bin/git gc --prune
+cd /home/docker/kali_patched_docker/ && /usr/bin/git gc --prune
+
 
 
