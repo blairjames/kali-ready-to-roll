@@ -38,11 +38,14 @@ push() {
 
 main() {
   local path
+  local timestamp
   local name
   path="${USERHOME}"/docker/kali
-  name="docker.io/blairy/kali-ready-to-roll"
   readonly path
-  readonly name
+  timestamp=$(/usr/bin/date +%Y%m%d_%H%M)
+  readonly timestamp
+  name="docker.io/blairy/kali-ready-to-roll:""${timestamp}"
+  readonly name 
   configure "${path}" "${name}" || except "Failed to configure the image name and path." 
   push "${name}" || except "Failed to push image to Docker hub"
 }
