@@ -1,24 +1,13 @@
 #!/usr/bin/env bash
 
-source /root/.ssh/agent/root || . /root/.ssh/agent/root
-
-echo $(date) > /home/docker/kali_patched_docker/log.build
-
-timestamp () {
-    date +"%Y%m%d_%H%M%S"
+build() {
+  local path;
+  path=/$HOME/docker/kali;
+  sudo docker build --pull -t docker.io/blairy/kali-ready-to-roll:latest $path --progress=plain 2>&1 | tee $path/build.log;
 }
 
-docker build . -t blairy/kali_patched:$(timestamp) --no-cache --rm --pull || echo 'Docker Build Failed!' 
+main() {
+  build || exit 111;
+}
 
-git="/usr/bin/git -C /home/docker/kali_patched_docker"
-
-$git pull git@github.com:blairjames/kali_patched_docker.git || echo 'Pull Failed!'
-$git add --all || echo 'Add Failed!'
-$git commit -a -m 'Automatic build '$timestp || echo 'Commit Failed!'
-$git push || echo 'Push Failed!'
-
-# Prune
-cd /home/docker/kali_patched_docker/ && /usr/bin/git gc --prune
-
-
-
+main;
