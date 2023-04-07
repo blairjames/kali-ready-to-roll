@@ -23,6 +23,11 @@ RUN \
 RUN \
   apt -y install seclists
 
+# Extract rockyou.txt and remove archive
+RUN \
+  /usr/bin/gunzip /usr/share/wordlists/rockyou.txt.gz \
+  && /usr/bin/rm -f /usr/share/wordlists/rockyou.txt.gz
+  
 # Final confirmation that packages are up to date
 RUN \
   apt -y update \
