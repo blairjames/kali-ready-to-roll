@@ -1,40 +1,26 @@
-FROM docker.io/kalilinux/kali-rolling:latest
-RUN apt -y update && apt -y install apt-utils && apt -y full-upgrade
-RUN apt -y install \
-    util-linux \
-    apt-utils \
-    git \
-    bash \
-    vim \
-    gobuster \
-    sqlmap \
-    wordlists \
-    nmap \
-    curl \
-    wget \
-    cewl \
-    sslscan \
-    whois \
-    dnstwist \
-    sqlninja \
-    recon-ng \
-    metasploit-framework \
-    framework2
+FROM kalilinux/kali-rolling
 
-RUN gunzip /usr/share/wordlists/rockyou.txt.gz && \
-    cd /usr/share/wordlists && \
-    git clone https://github.com/danielmiessler/SecLists.git
+RUN \
+  apt -y update \
+  && DEBIAN_FRONTEND='noninteractive' \
+  apt -y install --no-install-recommends \
+  apt-utils \
+  apt-transport-https \
+  ca-certificates \
+  libllvm15 \
+  tzdata \
+  console-setup
 
-RUN echo "alias l='ls -lrth'" >> /root/.bashrc && \
-    echo "alias c='clear'" >> /root/.bashrc && \
-    echo "alias ll='ls -lth'" >> /root/.bashrc && \
-    echo "alias la='ls -larth'" >> /root/.bashrc && \
-    echo "alias in='apt -y install'" >> /root/.bashrc && \
-    echo "alias s='apt search'" >> /root/.bashrc && \
-    echo "alias up='clear && apt clean && \
-           apt-get check && \
-           apt-get -y update && \
-           apt-get -y full-upgrade && \
-           apt autoremove -y'" >> /root/.bashrc
+ENV TZ=Australia/Brisbane
 
+RUN \
+  apt -y install kali-linux-headless
+
+RUN \
+  apt -y install seclists
+
+RUN \
+  apt -y update && apt -y upgrade
+
+USER root
 ENTRYPOINT ["/bin/bash"]
